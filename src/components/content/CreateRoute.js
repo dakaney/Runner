@@ -1,44 +1,74 @@
 import React, { Component } from 'react';
-import {Map, InfoWindow, Marker, GoogleApiWrapper, Polyline } from 'google-maps-react';
+import {GoogleApiWrapper} from 'google-maps-react';
 import apiKey from '../../google_api_key';
 
 
 class CreateRoute extends Component {
     state = {
-        center: {lat: 37.7749, lng: -122.4194},
-        zoom: 11,
+        center: {lat: 37.774929, lng: -122.419418},
+        zoom: 13,
         markers: []
     };
+
+    componentDidMount(){
+        this.directionsService = new this.props.google.maps.DirectionsService();
+        this.directionsDisplay = new this.props.google.maps.DirectionsRenderer();
+
+        const map = new this.props.google.maps.Map(document.getElementById('map'), {
+            zoom: this.state.zoom,
+            center: this.state.center
+          });
+        this.props.google.maps.event.addListener(map, 'click',(event => {
+            this.handleClick(event, map)
+        }) )
+        this.directionsDisplay.setMap(map);
+    }
     
-    handleClick(t, map, { latLng } ) {
-        let lat = latLng.lat();
-        let lng = latLng.lng();
-        this.setState({
-            markers: this.state.markers.concat({lat, lng})
+    handleClick(event, map) {
+        let latitude = event.latLng.lat();
+        let longitude = event.latLng.lng();
+        let newCoords = {lat: latitude, lng: longitude}
+        new this.props.google.maps.Marker({
+            position: newCoords,
+            map:map
         })
+        this.setState({
+            markers: this.state.markers.concat(newCoords)
+        })
+
+        if (this.state.markers.length > 1) {
+            this.calculateAndDisplayRoute(
+                this.directionsService, 
+                this.directionsDisplay
+            );
+        }
+    
+    }
+    calculateAndDisplayRoute(directionsService, directionsDisplay) {
+        let waypts = [];
+        for (let i = 1; i < this.state.markers.length - 1; i++) {
+            waypts.push({location: this.state.markers[i]})
+        }
+        directionsService.route({
+          origin: this.state.markers[0],
+          destination: this.state.markers[this.state.markers.length - 1],
+          waypoints: waypts,
+          travelMode: 'WALKING'
+        }, function(response, status) {
+          if (status === 'OK') {
+            directionsDisplay.setDirections(response);
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
     }
   render() {
       return (
-        <div id="map">
-        <h4>Create Your Route</h4>
-        <Map google={this.props.google} onClick={this.handleClick.bind(this)} zoom={14}>
- 
-        {this.state.markers.map(marker =>
-            [<Marker position={{lat: marker.lat, lng: marker.lng}} />,
-             <Polyline options={{
-                path: this.state.markers,
-                geodesic: true,
-                strokeColor: '#ff2527',
-                strokeOpacity: 0.75,
-                strokeWeight: 2,
-            }}/>
-            ]
-        )}
- 
-        <InfoWindow onClose={this.onInfoWindowClose}>
-        </InfoWindow>
-      </Map>
-      </div>
+        <div className="container">
+            <h4>Create Your Route</h4>
+            <div id="map">
+            </div>
+        </div>
       )
   }
 }
