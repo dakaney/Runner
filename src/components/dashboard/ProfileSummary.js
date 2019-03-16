@@ -6,7 +6,7 @@ const ProfileSummary = () => {
         <div className="section">
             <div className="card z-depth-1 profile-summary">
                 <div className="card-content grey-text text-darken-3">
-                        <div className="avatar center"><NavLink to='/' className='btn-large btn-floating pink lighten-1'>WN</NavLink></div>
+                        <div className="avatar center"><NavLink to='/' className='btn-large btn-floating blue lighten-1'>WN</NavLink></div>
                         <span className="card-title center">Wayman Ng</span>
                         <NavLink to='/' className="black-text">
                             <div className="row">

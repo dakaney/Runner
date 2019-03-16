@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {GoogleApiWrapper} from 'google-maps-react';
 import apiKey from '../../google_api_key';
+import CreateRouteNav from './CreateRouteNav';
 
 
 class CreateRoute extends Component {
@@ -30,7 +31,8 @@ class CreateRoute extends Component {
         let newCoords = {lat: latitude, lng: longitude}
         new this.props.google.maps.Marker({
             position: newCoords,
-            map:map
+            map:map,
+            animation: this.props.google.maps.Animation.DROP,
         })
         this.setState({
             markers: this.state.markers.concat(newCoords)
@@ -64,8 +66,9 @@ class CreateRoute extends Component {
     }
   render() {
       return (
-        <div className="container">
-            <h4>Create Your Route</h4>
+        <div>
+            <h4 className="center">Create Your Route</h4>
+            <CreateRouteNav />
             <div id="map">
             </div>
         </div>
