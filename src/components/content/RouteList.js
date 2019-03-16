@@ -1,10 +1,10 @@
 import React from 'react';
 import RouteSummary from './RouteSummary';
 
-const RouteList = () => {
+const RouteList = ({ routes }) => {
     return (
         <div className="routes-list section">
-            <RouteSummary />
+            { routes && routes.map(route => <RouteSummary route={route} key={route.id}/>)}
         </div>
     )
 }
