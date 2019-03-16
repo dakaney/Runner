@@ -16,7 +16,7 @@ class RouteSummary extends Component {
             this.handleClick(event, minimap)
         }) )
         this.directionsDisplay.setMap(minimap);
-        this.directionsDisplay.setDirections(this.props.route)
+        this.directionsDisplay.setDirections(JSON.parse(this.props.route.directions))
     }
     render() {
         const divName = `minimap${this.props.route.id}`

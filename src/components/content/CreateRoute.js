@@ -32,7 +32,7 @@ class CreateRoute extends Component {
         this.setState({
             directions: this.directionsDisplay.directions
         })
-        this.props.createRoute(this.state.directions)
+        this.props.createRoute({directions: JSON.stringify(this.directionsDisplay.directions)})
     }
     
 
