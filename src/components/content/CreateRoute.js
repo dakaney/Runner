@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import {GoogleApiWrapper} from 'google-maps-react';
+import { connect } from 'react-redux';
 import apiKey from '../../google_api_key';
 import CreateRouteNav from './CreateRouteNav';
+import { createRoute } from '../../store/actions/routeActions';
 
 
 class CreateRoute extends Component {
     state = {
         center: {lat: 37.774929, lng: -122.419418},
         zoom: 13,
-        markers: []
+        markers: [],
+        directions: {}
     };
 
     componentDidMount(){
@@ -20,12 +23,20 @@ class CreateRoute extends Component {
             center: this.state.center
           });
         this.props.google.maps.event.addListener(map, 'click',(event => {
-            this.handleClick(event, map)
+            this.handleMapClick(event, map)
         }) )
         this.directionsDisplay.setMap(map);
     }
+
+    handleRouteCreate() {
+        this.setState({
+            directions: this.directionsDisplay.directions
+        })
+        this.props.createRoute(this.state.directions)
+    }
     
-    handleClick(event, map) {
+
+    handleMapClick(event, map) {
         let latitude = event.latLng.lat();
         let longitude = event.latLng.lng();
         let newCoords = {lat: latitude, lng: longitude}
@@ -44,7 +55,6 @@ class CreateRoute extends Component {
                 this.directionsDisplay
             );
         }
-    
     }
     calculateAndDisplayRoute(directionsService, directionsDisplay) {
         let waypts = [];
@@ -68,14 +78,19 @@ class CreateRoute extends Component {
       return (
         <div>
             <h4 className="center">Create Your Route</h4>
-            <CreateRouteNav />
+            <CreateRouteNav click={this.handleRouteCreate.bind(this)}/>
             <div id="map">
             </div>
         </div>
       )
   }
 }
-
-export default GoogleApiWrapper({
+const mapDispatchToProps = (dispatch) => {
+    return {
+        createRoute: (route) => dispatch(createRoute(route))
+    }
+}
+const WrapperContainer = GoogleApiWrapper({
     apiKey: (apiKey)
-  })(CreateRoute)
+  })(CreateRoute);
+export default connect(null, mapDispatchToProps)(WrapperContainer);

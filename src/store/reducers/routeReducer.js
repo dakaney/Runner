@@ -6,7 +6,12 @@ const initState = {
 };
 
 const routeReducer = (state = initState, action) => {
-    return state;
+    switch (action.type) {
+        case 'CREATE_ROUTE':
+            console.log('created route', action.route)
+        default:
+            return state
+    }
 }
 
 export default routeReducer;

@@ -1,10 +1,10 @@
 import React from 'react';
 
-const CreateRouteNav = () => {
+const CreateRouteNav = ({click}) => {
     return (
         <nav className="container nav-wrapper grey darken-2">
             <ul className="right">
-                <li><a className='btn waves-effect waves-light blue lighten-1'>Create</a></li>
+                <li><button onClick={click}className='btn waves-effect waves-light blue lighten-1'>Create</button></li>
             </ul>
         </nav>
     )
