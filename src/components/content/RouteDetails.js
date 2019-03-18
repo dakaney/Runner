@@ -1,13 +1,19 @@
 import React from 'react'
+import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import { compose } from 'redux';
+import Map from './Map';
 
 const RouteDetail = (props) => {
     const id = props.match.params.id;
+    const { route } = props ? props : null;
+    console.log(route)
   return (
     <div className="container section">
         <div className="card z-depth-0">
             <div className="card-content">
                 <div className="card-title">Route - {id}</div>
-                <p>some description</p>
+                <Map route={route}/>
             </div>
             <div className="card-action lighten-4 grey-text">
                 <div>Posted by Wayman</div>
@@ -18,4 +24,18 @@ const RouteDetail = (props) => {
   )
 }
 
-export default RouteDetail;
+const mapStateToProps = (state, ownProps) => {
+    const id = ownProps.match.params.id;
+    const routes = state.firestore.data.routes
+    const route = routes ? routes[id] : null;
+    return {
+        route: route
+    }
+}
+
+export default compose(
+    connect(mapStateToProps),
+    firestoreConnect([
+        {collection: 'routes'}
+    ])
+)(RouteDetail);
