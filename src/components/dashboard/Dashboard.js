@@ -15,7 +15,7 @@ class Dashboard extends Component {
                         <ProfileSummary />
                     </div>
                     <div className="col s9">
-                        <RouteList routes={routes} />
+                        <RouteList routes={routes}/>
                     </div>
                 </div>
             </div>

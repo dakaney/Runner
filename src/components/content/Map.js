@@ -12,7 +12,7 @@ class Map extends Component {
     };
 
     componentDidMount(){
-        console.log('in map', this.props.route)
+        console.log('in map', this.props)
         this.directionsService = new this.props.google.maps.DirectionsService();
         this.directionsDisplay = new this.props.google.maps.DirectionsRenderer();
 
@@ -59,18 +59,22 @@ class Map extends Component {
         for (let i = 1; i < this.state.markers.length - 1; i++) {
             waypts.push({location: this.state.markers[i]})
         }
+        let setDirections = (directions) => {
+            this.props.directions(directions);
+        }
         directionsService.route({
-          origin: this.state.markers[0],
-          destination: this.state.markers[this.state.markers.length - 1],
-          waypoints: waypts,
-          travelMode: 'WALKING'
-        }, function(response, status) {
-          if (status === 'OK') {
-            directionsDisplay.setDirections(response);
-          } else {
-            window.alert('Directions request failed due to ' + status);
-          }
-        });
+            origin: this.state.markers[0],
+            destination: this.state.markers[this.state.markers.length - 1],
+            waypoints: waypts,
+            travelMode: 'WALKING'
+            }, function(response, status) {
+            if (status === 'OK') {
+                directionsDisplay.setDirections(response);
+                setDirections(response);
+            } else {
+                window.alert('Directions request failed due to ' + status);
+            }
+        })
     }
   render() {
       let divName = this.props.route ? `map${this.props.route.id}` : 'map';
