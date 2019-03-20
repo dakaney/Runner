@@ -12,7 +12,6 @@ class Map extends Component {
     };
 
     componentDidMount(){
-        console.log('in map', this.props)
         this.directionsService = new this.props.google.maps.DirectionsService();
         this.directionsDisplay = new this.props.google.maps.DirectionsRenderer();
 
