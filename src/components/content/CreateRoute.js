@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import {GoogleApiWrapper} from 'google-maps-react';
 import { connect } from 'react-redux';
-import apiKey from '../../google_api_key';
 import CreateRouteNav from './CreateRouteNav';
 import { createRoute } from '../../store/actions/routeActions';
 import Map from './Map';
+import { Redirect } from 'react-router-dom';
 
 
 class CreateRoute extends Component {
@@ -22,6 +21,8 @@ class CreateRoute extends Component {
     }
 
   render() {
+      const { auth } = this.props;
+      if (!auth.uid) return <Redirect to='/signin' />
       return (
         <div>
             <h4 className="center">Create Your Route</h4>
@@ -31,12 +32,17 @@ class CreateRoute extends Component {
       )
   }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        auth: state.firebase.auth
+    }
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
         createRoute: (route) => dispatch(createRoute(route))
     }
 }
-const WrapperContainer = GoogleApiWrapper({
-    apiKey: (apiKey)
-  })(CreateRoute);
-export default connect(null, mapDispatchToProps)(WrapperContainer);
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateRoute);
