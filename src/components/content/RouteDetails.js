@@ -5,10 +5,8 @@ import { compose } from 'redux';
 import Map from './Map';
 import { Redirect } from 'react-router-dom';
 
-const RouteDetail = (props) => {
-    const id = props.match.params.id;
-    const { route } = props ? props : null;
-    const { auth } = props;
+const RouteDetail = ({route, auth, match}) => {
+    const id = match.params.id;
     if (!auth.uid) return <Redirect to='/signin' />
   return (
     <div className="container section">
@@ -18,7 +16,7 @@ const RouteDetail = (props) => {
                 <Map route={route}/>
             </div>
             <div className="card-action lighten-4 grey-text">
-                <div>Posted by Wayman</div>
+                <div>Posted by {route.authorFirstName + ' ' + route.authorLastName}</div>
                 <div>Date</div>
             </div>
         </div>

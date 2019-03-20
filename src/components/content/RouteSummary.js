@@ -1,14 +1,14 @@
 import React from 'react';
 import Map from './Map';
 
-const RouteSummary = (props) => {
+const RouteSummary = ({ route }) => {
     return (
         <div id="mapcontainer"  className="card z-depth-2 routes-summary">
                 <div className="card-content grey-text text-darken-3">
-                    <span className="card-title">First</span>
-                    <Map route={props.route}/>
-                    <p>Posted by Wayman</p>
-                    <p className="grey-text">Today</p>
+                    <span className="card-title">Route</span>
+                    <Map route={route}/>
+                    <p>Posted by {route.authorFirstName + ' ' + route.authorLastName}</p>
+                    <p className="grey-text">{route.createdAt.toDate().toString()}</p>
                 </div>
             </div>
     )

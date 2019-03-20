@@ -13,6 +13,7 @@ class CreateRoute extends Component {
 
     handleRouteCreate() {
         this.props.createRoute({directions: JSON.stringify(this.state.directions)})
+        this.props.history.push('/')
     }
     handleDirectionsUpdate(directions) {
         this.setState({
