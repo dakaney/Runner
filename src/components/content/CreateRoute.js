@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { createRoute } from '../../store/actions/routeActions';
 import Map from './Map';
 import { Redirect } from 'react-router-dom';
+import moment from 'moment';
 
 
 class CreateRoute extends Component {
@@ -11,19 +12,22 @@ class CreateRoute extends Component {
         this.state = {
             directions: {},
             distance: 0,
-            title: '',
-            jogging: 'jogging'
+            title: 'No Title',
+            jogging: 'Jogging',
+            time: '00:00:00',
         };
         this.handleChange = this.handleChange.bind(this)
         this.handleRouteCreate = this.handleRouteCreate.bind(this)
         this.handleDirectionsUpdate = this.handleDirectionsUpdate.bind(this)
-        this.handleClear = this.handleClear.bind(this)
     }
     handleChange(e) {
         const id = e.target.id
-        if (id === 'jogging' || id === 'biking') {
+        if (id === 'Jogging' || id === 'Biking') {
+            let pace = id === 'Jogging' ? 5 : 2
+            let time = moment.utc(pace * this.state.distance * 60000).format('HH:mm:ss');
             this.setState({
-                jogging: id
+                jogging: id,
+                time: time
             })
         } else {
             this.setState({
@@ -32,18 +36,18 @@ class CreateRoute extends Component {
         }
     }
     handleRouteCreate() {
-        this.props.createRoute({directions: JSON.stringify(this.state.directions)})
+        this.props.createRoute({ ...this.state, directions: JSON.stringify(this.state.directions)})
         this.props.history.push('/')
     }
     handleDirectionsUpdate(directions, distance) {
         let newDist = this.state.distance + distance
+        let pace = this.state.jogging === 'Jogging' ? 5 : 2
+        let time = moment.utc(pace * newDist * 60000).format('HH:mm:ss');
         this.setState({
             directions,
-            distance: newDist
+            distance: newDist,
+            time
         })
-    }
-    handleClear() {
-        console.log('clear')
     }
 
   render() {
@@ -61,10 +65,9 @@ class CreateRoute extends Component {
         </div>
         <nav className="container nav-wrapper grey darken-2">
             <ul className="right">
-                <li><a href='#navBar' onClick={this.handleClear}>CLEAR</a></li>
-                <li><a href='#navBar' onClick={this.handleChange}><i id='jogging' className={this.state.jogging === 'jogging' ? "material-icons green-text" : "material-icons red-text"}>directions_run</i></a></li>
-                <li><a href='#navBar' onClick={this.handleChange}><i id='biking' className={this.state.jogging === 'biking' ? "material-icons green-text" : "material-icons red-text"}>directions_bike</i></a></li>
-                <li><a href='#navBar'>Estimated Time: time</a></li>
+                <li><a href='#navBar' onClick={this.handleChange}><i id='Jogging' className={this.state.jogging === 'Jogging' ? "material-icons green-text" : "material-icons red-text"}>directions_run</i></a></li>
+                <li><a href='#navBar' onClick={this.handleChange}><i id='Biking' className={this.state.jogging === 'Biking' ? "material-icons green-text" : "material-icons red-text"}>directions_bike</i></a></li>
+                <li><a href='#navBar'>Estimated Time: {this.state.time}</a></li>
                 <li><a href='#navBar'>Route Distance: {this.state.distance.toFixed(2)} km</a></li>
                 <li><a href='#navBar'><button onClick={this.handleRouteCreate}className='btn waves-effect waves-light blue lighten-1'>Create</button></a></li>
             </ul>
