@@ -1,5 +1,6 @@
 import React from 'react';
 import Map from './Map';
+import moment from 'moment';
 
 const RouteSummary = ({ route }) => {
     return (
@@ -8,7 +9,7 @@ const RouteSummary = ({ route }) => {
                     <span className="card-title">Route</span>
                     <Map route={route}/>
                     <p>Posted by {route.authorFirstName + ' ' + route.authorLastName}</p>
-                    <p className="grey-text">{route.createdAt.toDate().toString()}</p>
+                    <p className="grey-text">{moment(route.createdAt.toDate()).calendar()}</p>
                 </div>
             </div>
     )

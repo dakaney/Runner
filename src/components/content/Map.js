@@ -8,7 +8,7 @@ class Map extends Component {
         center: {lat: 37.774929, lng: -122.419418},
         zoom: 13,
         markers: [],
-        directions: {}
+        directions: {},
     };
 
     componentDidMount(){
@@ -34,6 +34,7 @@ class Map extends Component {
     }
 
     handleMapClick(event, map) {
+        let newDist = 0;
         let latitude = event.latLng.lat();
         let longitude = event.latLng.lng();
         let newCoords = {lat: latitude, lng: longitude}
@@ -45,21 +46,36 @@ class Map extends Component {
         this.setState({
             markers: this.state.markers.concat(newCoords)
         })
+        const service = new this.props.google.maps.DistanceMatrixService();
 
         if (this.state.markers.length > 1) {
-            this.calculateAndDisplayRoute(
-                this.directionsService, 
-                this.directionsDisplay
-            );
+            service.getDistanceMatrix({
+                origins: [this.state.markers[this.state.markers.length - 2]],
+                destinations: [this.state.markers[this.state.markers.length - 1]],
+                travelMode: this.props.google.maps.TravelMode.DRIVING,
+                avoidHighways: false,
+                avoidTolls: false
+            }, (response, status) => {
+                if (status === 'OK') {
+                    let dist = response.rows[0].elements[0].distance.text.split(' ');
+                    if (dist[1] === 'm') newDist += Number(dist[0]) * .001;
+                    if (dist[1] === 'km') newDist += Number(dist[0]);
+                    this.calculateAndDisplayRoute(
+                        this.directionsService, 
+                        this.directionsDisplay,
+                        newDist
+                    );
+                }
+            })
         }
     }
-    calculateAndDisplayRoute(directionsService, directionsDisplay) {
+    calculateAndDisplayRoute(directionsService, directionsDisplay, distance) {
         let waypts = [];
         for (let i = 1; i < this.state.markers.length - 1; i++) {
             waypts.push({location: this.state.markers[i]})
         }
-        let setDirections = (directions) => {
-            this.props.directions(directions);
+        let setDirections = (directions, distance) => {
+            this.props.directions(directions, distance);
         }
         directionsService.route({
             origin: this.state.markers[0],
@@ -69,7 +85,7 @@ class Map extends Component {
             }, function(response, status) {
             if (status === 'OK') {
                 directionsDisplay.setDirections(response);
-                setDirections(response);
+                setDirections(response, distance);
             } else {
                 window.alert('Directions request failed due to ' + status);
             }

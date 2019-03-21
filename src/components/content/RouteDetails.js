@@ -4,6 +4,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import Map from './Map';
 import { Redirect } from 'react-router-dom';
+import moment from 'moment';
 
 const RouteDetail = ({route, auth, match}) => {
     const id = match.params.id;
@@ -17,7 +18,7 @@ const RouteDetail = ({route, auth, match}) => {
             </div>
             <div className="card-action lighten-4 grey-text">
                 <div>Posted by {route.authorFirstName + ' ' + route.authorLastName}</div>
-                <div>Date</div>
+                <div>{moment(route.createdAt.toDate()).calendar()}</div>
             </div>
         </div>
     </div>
