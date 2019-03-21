@@ -2,13 +2,14 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 const ProfileSummary = ({profile}) => {
+    console.log(profile)
     return (
         <div className="section">
             <div className="card z-depth-1 profile-summary">
                 <div className="card-content grey-text text-darken-3">
                         <div className="avatar center"><NavLink to='/' className='btn-large btn-floating blue lighten-1'>{profile.initials}</NavLink></div>
                         <span className="card-title center">{profile.firstName + ' ' + profile.lastName}</span>
-                        <NavLink to='/' className="black-text">
+                        {/* <NavLink to='/' className="black-text">
                             <div className="row">
                                 <div className="col s3 center">
                                     <p>Activities</p>
@@ -23,7 +24,7 @@ const ProfileSummary = ({profile}) => {
                                     <p>0</p>
                                 </div>
                             </div>
-                        </NavLink>
+                        </NavLink> */}
                 </div>
             </div>
         </div>

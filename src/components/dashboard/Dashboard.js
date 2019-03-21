@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import ProfileSummary from './ProfileSummary';
-import RouteList from '../content/RouteList';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { Redirect } from 'react-router-dom';
+import ProfileSummary from './ProfileSummary';
+import RouteList from '../content/RouteList';
+import RecentActivity from './RecentActivity';
   
 class Dashboard extends Component {
     render() {
@@ -15,6 +16,7 @@ class Dashboard extends Component {
                 <div className="row">
                     <div className="col s3">
                         <ProfileSummary profile={profile}/>
+                        <RecentActivity />
                     </div>
                     <div className="col s9">
                         <RouteList routes={routes} profile={profile}/>
@@ -36,6 +38,6 @@ const mapStateToProps = (state) => {
 export default compose(
     connect(mapStateToProps),
     firestoreConnect([
-        { collection: 'routes'}
+        { collection: 'routes', limit: 5, orderBy:['createdAt', 'desc']}
     ])
 )(Dashboard);
