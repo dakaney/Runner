@@ -14,11 +14,11 @@ class Dashboard extends Component {
         return (
             <div className='dashboard container'>
                 <div className="row">
-                    <div className="col s3">
+                    <div className="col s3 m3">
                         <ProfileSummary profile={profile}/>
                         <RecentActivity />
                     </div>
-                    <div className="col s9">
+                    <div className="col s12 m6">
                         <RouteList routes={routes} profile={profile}/>
                     </div>
                 </div>
