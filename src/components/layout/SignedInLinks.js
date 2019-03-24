@@ -7,7 +7,7 @@ const SignedInLinks = ({signOut, profile}) => {
     return (
         <ul className="right">
             <li><NavLink to='/create'>New Route</NavLink></li>
-            <li><a href='#navBar' onClick={signOut}>Log Out</a></li>
+            <li><NavLink to='/signin' onClick={signOut}>Log Out</NavLink></li>
             <li><NavLink to='/' className='btn btn-floating blue lighten-1'>{profile.initials}</NavLink></li>
         </ul>
     )
