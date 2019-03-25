@@ -11,6 +11,11 @@
     width: 100%;
 }
 
+#mapcontainer {
+    width: 100%;
+    min-width: 100%
+}
+
 #titleInput {
     width: 30%
 }

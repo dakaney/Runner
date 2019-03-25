@@ -35,10 +35,12 @@ class CreateRoute extends Component {
             })
         }
     }
+
     handleRouteCreate() {
         this.props.createRoute({ ...this.state, directions: JSON.stringify(this.state.directions)})
         this.props.history.push('/')
     }
+
     handleDirectionsUpdate(directions, distance) {
         let newDist = this.state.distance + distance
         let pace = this.state.jogging === 'Jogging' ? 5 : 2
