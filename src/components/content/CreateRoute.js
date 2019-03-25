@@ -69,15 +69,15 @@ class CreateRoute extends Component {
                     <input type="text" id="title" onChange={this.handleChange}/>
             </div>
         </div>
-        <nav className="container nav-wrapper grey darken-2">
-            <ul className="right">
-                <li><a href='#navBar' onClick={this.handleChange}><i id='Jogging' className={this.state.jogging === 'Jogging' ? "material-icons green-text" : "material-icons red-text"}>directions_run</i></a></li>
-                <li><a href='#navBar' onClick={this.handleChange}><i id='Biking' className={this.state.jogging === 'Biking' ? "material-icons green-text" : "material-icons red-text"}>directions_bike</i></a></li>
-                <li><a href='#navBar'>Estimated Time: {this.state.time}</a></li>
-                <li><a href='#navBar'>Route Distance: {this.state.distance.toFixed(2)} km</a></li>
-                <li><a href='#navBar'><button onClick={this.handleRouteCreate}className='btn waves-effect waves-light blue lighten-1'>Create</button></a></li>
+        <div id="map-nav" className="container">
+            <ul className="map-nav-bar">
+                <li onClick={this.handleChange}><i id='Jogging' className={this.state.jogging === 'Jogging' ? "material-icons green-text icon" : "material-icons red-text icon"}>directions_run</i></li>
+                <li onClick={this.handleChange}><i id='Biking' className={this.state.jogging === 'Biking' ? "material-icons green-text icon" : "material-icons red-text icon"}>directions_bike</i></li>
+                <li>Estimated Time: {this.state.time}</li>
+                <li>Route Distance: {this.state.distance.toFixed(2)} km</li>
+                <li><button onClick={this.handleRouteCreate}className='btn waves-effect waves-light blue lighten-1'>Create</button></li>
             </ul>
-        </nav>
+        </div>
         </div>
             <Map directions={this.handleDirectionsUpdate}/>
         </div>
