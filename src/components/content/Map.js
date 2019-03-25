@@ -75,7 +75,7 @@ class Map extends Component {
             waypts.push({location: this.state.markers[i]})
         }
         let setDirections = (directions, distance) => {
-            this.props.directions(directions, distance);
+            this.props.directions(directions, distance, this.state.markers);
         }
         let reload = () => {
             this.state.pins[this.state.pins.length - 1].setMap(null);

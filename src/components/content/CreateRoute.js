@@ -15,6 +15,7 @@ class CreateRoute extends Component {
             title: 'No Title',
             jogging: 'Jogging',
             time: '00:00:00',
+            markers: []
         };
         this.handleChange = this.handleChange.bind(this)
         this.handleRouteCreate = this.handleRouteCreate.bind(this)
@@ -35,20 +36,23 @@ class CreateRoute extends Component {
             })
         }
     }
-
+    
     handleRouteCreate() {
-        this.props.createRoute({ ...this.state, directions: JSON.stringify(this.state.directions)})
-        this.props.history.push('/')
+        if (this.state.markers.length >= 2) {
+            this.props.createRoute({ ...this.state, directions: JSON.stringify(this.state.directions)})
+            this.props.history.push('/')
+        }
     }
 
-    handleDirectionsUpdate(directions, distance) {
+    handleDirectionsUpdate(directions = this.state.directions, distance = this.state.distance, markers) {
         let newDist = this.state.distance + distance
         let pace = this.state.jogging === 'Jogging' ? 5 : 2
         let time = moment.utc(pace * newDist * 60000).format('HH:mm:ss');
         this.setState({
             directions,
             distance: newDist,
-            time
+            time,
+            markers
         })
     }
 
