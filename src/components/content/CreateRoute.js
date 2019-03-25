@@ -40,7 +40,7 @@ class CreateRoute extends Component {
     handleRouteCreate() {
         if (this.state.markers.length >= 2) {
             this.props.createRoute({ ...this.state, directions: JSON.stringify(this.state.directions)})
-            this.props.history.push('/')
+            this.props.history.push('/dashboard')
         }
     }
 

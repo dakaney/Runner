@@ -6,6 +6,7 @@ import RouteDetails from './components/content/RouteDetails';
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
 import CreateRoute from './components/content/CreateRoute';
+import LandingPage from './components/dashboard/LandingPage';
 import './App.css';
 
 
@@ -17,7 +18,8 @@ class App extends Component {
         <div className="App">
           <NavBar />
           <Switch>
-            <Route exact path='/' component={Dashboard} />
+            <Route exact path='/' component={LandingPage} />
+            <Route path='/dashboard' component={Dashboard} />
             <Route path='/route/:id' component={RouteDetails} />
             <Route path='/signin' component={SignIn} />
             <Route path='/signup' component={SignUp} />

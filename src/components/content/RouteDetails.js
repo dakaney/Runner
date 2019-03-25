@@ -6,8 +6,7 @@ import Map from './Map';
 import { Redirect } from 'react-router-dom';
 import moment from 'moment';
 
-const RouteDetail = ({route, auth, match}) => {
-    const id = match.params.id;
+const RouteDetail = ({route, auth}) => {
     if (!auth.uid) return <Redirect to='/signin' />
   return (
     <div className="container section">

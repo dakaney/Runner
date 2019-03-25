@@ -8,7 +8,7 @@ const SignedInLinks = ({signOut, profile}) => {
         <ul className="right">
             <li><NavLink to='/create'>New Route</NavLink></li>
             <li><NavLink to='/signin' onClick={signOut}>Log Out</NavLink></li>
-            <li><NavLink to='/' className='btn btn-floating blue lighten-1'>{profile.initials}</NavLink></li>
+            <li><NavLink to='/dashboard' className='btn btn-floating blue lighten-1'>{profile.initials}</NavLink></li>
         </ul>
     )
 }
