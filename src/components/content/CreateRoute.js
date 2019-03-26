@@ -71,10 +71,10 @@ class CreateRoute extends Component {
         </div>
         <div id="map-nav" className="container">
             <ul className="map-nav-bar">
-                <li onClick={this.handleChange}><i id='Jogging' className={this.state.jogging === 'Jogging' ? "material-icons green-text icon" : "material-icons red-text icon"}>directions_run</i></li>
-                <li onClick={this.handleChange}><i id='Biking' className={this.state.jogging === 'Biking' ? "material-icons green-text icon" : "material-icons red-text icon"}>directions_bike</i></li>
-                <li>Estimated Time: {this.state.time}</li>
-                <li>Route Distance: {this.state.distance.toFixed(2)} km</li>
+                <li><button onClick={this.handleChange} id='Jogging'><i id='Jogging' className={this.state.jogging === 'Jogging' ? "material-icons green-text icon" : "material-icons red-text icon"}>directions_run</i>Jog</button></li>
+                <li><button onClick={this.handleChange} id='Biking'><i id='Biking' className={this.state.jogging === 'Biking' ? "material-icons green-text icon" : "material-icons red-text icon"}>directions_bike</i> Bike</button></li>
+                <li>Est. Time: {this.state.time}</li>
+                <li>Route Dist: {this.state.distance.toFixed(2)} km</li>
                 <li><button onClick={this.handleRouteCreate}className='btn waves-effect waves-light blue lighten-1'>Create</button></li>
             </ul>
         </div>

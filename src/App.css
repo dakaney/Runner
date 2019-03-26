@@ -49,25 +49,6 @@
     vertical-align: center;
 }
 
-.icon {
-    background-color: lightgrey;
-}
-
-/* div#map-nav {
-    width: 100%;
-    text-align: center;
-}
-ul.map-nav-bar {
-    margin: 2px auto;
-    line-height: 1.4;
-    padding-left: 0;
-}
-.map-nav-bar li {
-    margin-left: 20px auto;
-    display: inline;
-    text-align: center;
-} */
-
 ul.map-nav-bar {
     display: table;
     width: 100%;
