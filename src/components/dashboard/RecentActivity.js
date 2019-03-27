@@ -5,7 +5,7 @@ const RecentActivity = ({ limit, order}) => {
         <div className="section hide-on-small-only">
             <div className="card z-depth-1 recent-activity">
                 <div className="card-content grey-text text-darken-3">
-                        <span className="card-title center">Filters</span>
+                <div className="center"><div className='circle z-depth-2 blue lighten-1'>Filters</div></div>
                         <p className='center'>Number of Routes Displayed</p>
                         <div className='center'>
                             <button onClick={limit} id='5'>5</button>
