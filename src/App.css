@@ -1,3 +1,5 @@
+::-moz-selection { background:transparent; }
+::selection { background:transparent; }
 #map {
     height: 75vh;
     width: 95%;
@@ -57,4 +59,8 @@ ul.map-nav-bar {
 .map-nav-bar li {
     display: table-cell;
     text-align: center;
+}
+
+.filter-button {
+    margin-top: 10px;
 }
